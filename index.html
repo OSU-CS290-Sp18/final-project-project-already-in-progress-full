@@ -1,71 +1,70 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Dungeon mapper</title>
-		<!-- This is a stylesheet that includes the font you should use -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700" rel="stylesheet">
-		<!-- This is a 3rd-party stylesheet for Font Awesome: http://fontawesome.io/ -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" media="screen">
-		<link rel="stylesheet" href="style.css" type="text/css">
-	</head>
-	<body>
-		<header>
-			<!-- The <i> tag below includes the bullhorn icon from Font Awesome -->
-			<a href="#"><h1 class="site-title"><i class="fa fa-map-o"></i> Dungeon Mapper</h1></a>
-			<nav class="navbar">
-				<ul class="navlist">
-					<li class="navitem navlink active"><a href="#">Home</a></li>
-					<li class="navitem navlink"><a href="#">Mapping List</a></li>
-					<li class="navitem navbar-search">
-						<input type="text" id="navbar-search-input" placeholder="Search...">
-					</li>
-				</ul>
-			</nav>
-		</header>
-		<main class="container">
-			<div class = "aboutPage">
-				<h3>About the Page</h3>
-				<p>through this webpage, you are able to look at different maps for the game of dungeons and dragons</p>
-				<p> below you have the option of pressing the pencil button to create your own personal maps</p>
-				<p> If you are wanting to find some insperation, below are example maps to help you get started as well</p>
-			</div>
-			<div id="container-div" class="container-div">
-			<article class="map">
-				<i id ="expandImage" tabindex="0" class="fa fa-plus"></i>
-				<div class="content">
-					<p class="text">
-						<img src="http://i.imgur.com/mKC2e4p.jpg" width = 300px, height = 300px>
-					</p>
-					<p class="attribution">
-						<a href="#">map example name</a>
-					</p>
-				</div>
-			<!-- </article>? -->
-		</main>
-		<button type="button" id="create-button"><i class="fa fa-pencil-square-o"onclick="createTweet();"></i></button>
-		<div id="modal-backdrop" class="hidden"></div>
-		<div id="create-modal" class="hidden">
-			<div class="modal-dialog">
-				<div class="modal-header">
-					<h3>Create Map</h3>
-					<button type="button" class="modal-close-button" onclick="CloseModal()">&times;</button>
-				</div>
-				<div class="modal-body">
-					<div class="input-element">
-						<label for="text-input">maptext</label>
-						<textarea id="text-input"></textarea>
-					</div>
-					<div class="input-element">
-						<label for="attribution-input">Author</label>
-						<input type="text" id="attribution-input">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="modal-cancel-button" onclick="CloseModal()">Cancel</button>
-					<button type="button" class="modal-accept-button" onclick="createMap()">Create Dungeon Map</button>
-				</div>
-			</div>
-		</div>
-	</body>
+<head>
+<meta charset="utf-8">
+<title>Dungeon mapper</title>
+<!-- This is a stylesheet that includes the font you should use -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700" rel="stylesheet">
+<!-- This is a 3rd-party stylesheet for Font Awesome: http://fontawesome.io/ -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" media="screen">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<script src="index.js"></script>
+<body>
+<header>
+<!-- The <i> tag below includes the bullhorn icon from Font Awesome -->
+<a href="#"><h1 class="site-title"><i class="fa fa-map-o"></i> Dungeon Mapper</h1></a>
+<nav class="navbar">
+<ul class="navlist">
+<li class="navitem navlink active"><a href="#">Home</a></li>
+<li class="navitem navlink"><a href => mapping list/* addLink*/ </a></li>
+<li class="navitem navbar-search">
+<input type="text" id="navbar-search-input" placeholder="Search...">
+</li>
+</ul>
+</nav>
+</header>
+<main class="container">
+<div class = "aboutPage">
+<h3>About the Page</h3>
+<p>through this weboage, you are able to look at different maps for the game of dungeons and dragons</p>
+<p> below you have the option of pressing the pencil button to create your own personal maps</p>
+<p> If you are wanting to find some insperation, below are example maps to help you get started as well</p>
+</div>
+<div id="container-div" class="container-div">
+<article class="map">
+<i id ="expandImage" tabindex="0" class="fa fa-plus"><a  class = "input-element" href="#">map example name</a></i>
+<div class="content">
+<p class="text">
+<img src="http://i.imgur.com/mKC2e4p.jpg" width = 300px, height = 300px>
+</p>
+<p class="attribution">
+</p>
+</div>
+</main>
+<button type="button" id="create-button"><i class="fa fa-pencil-square-o"onclick="createMap();"></i></button>
+<div id="modal-backdrop" class="hidden"></div>
+<div id="create-modal" class="hidden">
+<div class="modal-dialog">
+<div class="modal-header">
+<h3>Create Map</h3>
+<button type="button" class="modal-close-button" onclick="CloseModal()">&times;</button>
+</div>
+<div class="modal-body">
+<div class="input-element">
+<label for="text-input">Map</label>
+<textarea id="text-input"></textarea>
+</div>
+<div class="input-element">
+<label for="attribution-input">mapName</label>
+<input type="text" id="attribution-input">
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="modal-cancel-button" onclick="CloseModal()">Cancel</button>
+<button type="button" class="modal-accept-button" onclick="createMap()">Create Dungeon Map</button>
+</div>
+</div>
+</div>
+</body>
 </html>
