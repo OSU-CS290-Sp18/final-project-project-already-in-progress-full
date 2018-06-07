@@ -4,8 +4,6 @@ var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars');
 
-var tempData = require('./tempData');
-
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -27,4 +25,4 @@ app.get('*', function (req, res) {
 
 app.listen(port, function () {
 	console.log('== Server is listening on port', port);
-}
+});
