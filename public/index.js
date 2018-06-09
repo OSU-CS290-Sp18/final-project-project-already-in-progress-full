@@ -31,11 +31,11 @@ var conent = document.createElement('article');
       alert('you did not add a map name or create a map!');
       
   }else{
-
-    *
-    *
-    *
-    *
-    *
-
+    **
+    **
+    **
+    **
+    **
+    **
+  CloseModal();
 }
