@@ -39,14 +39,3 @@ var conent = document.createElement('article');
     *
 
 }
-
-//this fuction will help the search bar search through all maps
-function search(){
-*
-*
-*
-*
-*
-*
-*
-}
