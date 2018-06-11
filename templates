@@ -41,9 +41,9 @@ x{{> header}}
 
 <main class="container">
 
-{{# each twit}}
+{{# each map}}
 
-{{> twit}}
+{{> map}}
 
 {{/each}}
 
