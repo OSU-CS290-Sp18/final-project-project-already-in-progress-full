@@ -23,7 +23,7 @@ var port = process.env.PORT || 13276;
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
@@ -92,7 +92,7 @@ app.post('/environtments/:environtment/addMap', function (req,res,next) {
 });
 
 app.get('/search', function (req, res, next) {
-	res.status(404).render('searchPage', {
+	res.status(404).render('404Page', {
 		error404: false
 	});
 	console.log('  ~~ invalid destination');

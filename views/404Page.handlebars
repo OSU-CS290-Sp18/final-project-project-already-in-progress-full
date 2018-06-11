@@ -7,15 +7,15 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" media="screen">
 		<link rel="stylesheet" href="style.css" type="text/css">
 		
-		<script src = "index.js" defer></script>
+		<script src = "index.js"></script>
 	</head>
 	<body>
 		<header>
-			<a href="/"><h1 class="site-title"><i class="fa fa-map-o"></i> Dungeon Mapper</h1></a>
+			<a href="/"><h1 class="site-title"><i class="far fa-map-o"></i> Dungeon Mapper</h1></a>
 			
 			<nav class="navbar">
 				<ul class="navlist">
-					<li class="navitem navlink active"><a href="/">Home</a></li>
+					<li class="navitem navlink"><a href="/">Home</a></li>
 					<li class="navitem navlink"><a href="/environments">Environments</a></li>
 					<li class="navitem  navbar-search">
 						<input type="text" id="navbar-search-input" placeholder="Search...">
@@ -26,11 +26,11 @@
 		</header>
 		
 		<main class="container">
-			<div class="aboutPage">
-				<h3>About this Site</h3>
-				<p>This website allows you to create and view dungeon maps for RolePlaying games such as Dungeons and Dragons.</p>
-				<p>Navigate to the environments page you wish to create a dungeon for, then
-				press the button in the lower right-hand corner to create your own maps.</p>
-			<div>
+		{{#if error404}}
+			<h1>404: Page not found</h1>
+		{{else}}
+			<h1>This is a search page. You found it! Search over.</h1>
+		{{/if}}
 		</main>
+		
 	</body>

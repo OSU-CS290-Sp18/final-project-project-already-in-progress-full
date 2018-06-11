@@ -3,8 +3,20 @@
     "environment": "forest",
     "maps": [
 	  {
-	    "caption": "",
-		"mapCode": ""
+	    "caption": "A Lone Pixel",
+		"mapCode": [1,0]
+	  }
+	]
+    "maps": [
+	  {
+	    "caption": "A Brave Pixel",
+		"mapCode": [0,1]
+	  }
+	]
+    "maps": [
+	  {
+	    "caption": "A Couple of Pixels,
+		"mapCode": [1,2]
 	  }
 	]
   },

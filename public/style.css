@@ -8,6 +8,11 @@ a {
 	text-decoration: none;
 }
 
+.canvas {
+	border:1px solid;
+	background:white;
+}
+
 .site-title {
 	margin: 0;
 	padding: 10px 20px;

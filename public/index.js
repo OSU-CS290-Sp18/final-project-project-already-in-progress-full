@@ -90,7 +90,7 @@ homeLink.addEventListener('click', function(e) {
 	}
 });
 
-homeLink.addEventListener('click', function(e) {
+environmentsLink.addEventListener('click', function(e) {
 	if(e.button == 0) {
 	var request = new XMLHttpRequest();
 	var url = "/environments/";
