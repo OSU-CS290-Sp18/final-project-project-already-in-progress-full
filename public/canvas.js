@@ -1,5 +1,5 @@
 // Remember to defer this script: <script src="canvas.js" charset="utf-8" defer></script>
-
+function closeModal(){}
 /**********************
  *  Global Variables  *
  **********************/
@@ -8,20 +8,40 @@ const active	= {color: 'rgb(200,200,200)', backgroundColor: 'rgb(30,30,30)'};
 const inactive	= {color: 'rgb(0,0,0)', backgroundColor: 'rgb(200,200,200)'};
  
 var buttonWallSingle	= document.getElementById('button-canvas-wall-single');
-var buttonWallRect		= document.getElementById('button-canvas-wall-rectangle');
 var buttonEraser		= document.getElementById('button-canvas-eraser');
-var buttonMonster		= document.getElementById('button-canvas-monster');
-var buttonBoss			= document.getElementById('button-canvas-boss');
-var buttonItem			= document.getElementById('button-canvas-item');
 var buttonClear			= document.getElementById('button-canvas-clear');
 var buttonSave			= document.getElementById('button-canvas-save');
 var mapCanvas			= document.getElementById('map-canvas');
-var selectedTool = -1;
+var selectedTool 		= -1;
+
+var homeLink			= document.getElementsByClassName('navlink')[0];
+var environmentsLink	= document.getElementsByClassName('navlink')[1];
+var modalBackdrop		= document.getElementById('modal-backdrop');
+var createModal			= document.getElementById('create-modal');
+var captionInput		= document.getElementById("text-input");
+var createButton		= document.getElementById("createButton");
+
+var cardContainer		= document.getElementsByClassName("container")[0];
 
 /**********************
  *  Button Functions  *
  **********************/
- 
+
+// Open modal on button click
+function unhideModal(e) {
+	modalBackdrop.classList.remove("hidden");
+	createModal.style.display ="block";
+}
+
+// Close modal on button click
+function hideModal() {
+
+modalBackdrop.classList.add("hidden");
+createModal.style.display ="none";
+captionInput.value = "";
+
+}
+
 // tool button color changer
 function colorChange(buttonCode) {
 	if(buttonCode == -1) {
@@ -31,40 +51,12 @@ function colorChange(buttonCode) {
 		buttonWallSingle.style.color = inactive.color;
 		buttonWallSingle.style.backgroundColor = inactive.backgroundColor;
 	}
-	if(buttonCode == 0) {
-		buttonWallRect.style.color = active.color;
-		buttonWallRect.style.backgroundColor = active.backgroundColor;
-	} else {
-		buttonWallRect.style.color = inactive.color;
-		buttonWallRect.style.backgroundColor = inactive.backgroundColor;
-	}
 	if(buttonCode == 1) {
 		buttonEraser.style.color = active.color;
 		buttonEraser.style.backgroundColor = active.backgroundColor;
 	} else {
 		buttonEraser.style.color = inactive.color;
 		buttonEraser.style.backgroundColor = inactive.backgroundColor;
-	}
-	if(buttonCode == 2) {
-		buttonMonster.style.color = active.color;
-		buttonMonster.style.backgroundColor = active.backgroundColor;
-	} else {
-		buttonMonster.style.color = inactive.color;
-		buttonMonster.style.backgroundColor = inactive.backgroundColor;
-	}
-	if(buttonCode == 3) {
-		buttonBoss.style.color = active.color;
-		buttonBoss.style.backgroundColor = active.backgroundColor;
-	} else {
-		buttonBoss.style.color = inactive.color;
-		buttonBoss.style.backgroundColor = inactive.backgroundColor;
-	}
-	if(buttonCode == 4) {
-		buttonItem.style.color = active.color;
-		buttonItem.style.backgroundColor = active.backgroundColor;
-	} else {
-		buttonItem.style.color = inactive.color;
-		buttonItem.style.backgroundColor = inactive.backgroundColor;
 	}
 }
 
@@ -75,28 +67,50 @@ function eventListenerInit() {
 			selectedTool = -1;
 			colorChange(selectedTool);
 	});
-	buttonWallRect.addEventListener('click', function(e) {
-			selectedTool = 0;
-			colorChange(selectedTool);
-	});
 	buttonEraser.addEventListener('click', function(e) {
 			selectedTool = 1;
 			colorChange(selectedTool);
 	});
-	buttonMonster.addEventListener('click', function(e) {
-			selectedTool = 2;
-			colorChange(selectedTool);
-	});
-	buttonBoss.addEventListener('click', function(e) {
-			selectedTool = 3;
-			colorChange(selectedTool);
-	});
-	buttonItem.addEventListener('click', function(e) {
-			selectedTool = 4;
-			colorChange(selectedTool);
-	});
 }
 
+// Modal event listeners
+createButton.addEventListener('click', unhideModal())
+
+
+// Navlink event listeners
+homeLink.addEventListener('click', function(e) {
+	if(e.button == 0) {
+	var request = new XMLHttpRequest();
+	var url = "/";
+	request.open("GET", url);
+	request.setRequestHeader('Content-Type', 'text/html');
+	request.send();
+	}
+});
+
+homeLink.addEventListener('click', function(e) {
+	if(e.button == 0) {
+	var request = new XMLHttpRequest();
+	var url = "/environments/";
+	request.open("GET", url);
+	request.setRequestHeader('Content-Type', 'text/html');
+	request.send();
+	}
+});
+
+
+/******************
+ * Map Submission *
+ ******************/
+function getEnvironmentFromURL() {
+	var path = window.location.pathname;
+	var pathParts = path.split('/');
+	if (pathParts[1] === "environments") {
+		return pathParts[2];
+	} else {
+		return null;
+	}
+}
 
 /**********************
  *  Canvas Functions  *
@@ -120,13 +134,17 @@ Shape.prototype.draw = function(ctx) {
 }
 
 // Determine if a point is inside the Shape's bounds
-Shape.prototype.contains = function(gridx, gridy) {
-	return (this.x == gridx) && (this.y == gridy);
+Shape.prototype.contains = function(mx, my) {
+	return (this.x <= mx) && (this.x + this.w >= mx) &&
+		   (this.y <= my) && (this.y + this.h >= my);
 }
 	//return (this.x <= mx) && (this.x + this.w >= mx) &&
 	//   (this.y <= my) && (this.y + this.h >= my);
 
 
+/******************
+ * Drawing Canvas *
+ ******************/
 function CanvasState(canvas) {
 	/*** Setup ***/
 	
@@ -155,9 +173,6 @@ function CanvasState(canvas) {
 	this.valid = false; // when false, the canvas will redraw everything
 	this.shapes = []; // the collection of things to be drawn
 	this.dragging = false; // Keep track of when we are dragging
-	// the current selected object:
-	this.dragX = 0; // <- mousedown and mousemove events
-	this.dragY = 0; // <
 	
 	/*** Event Listeners ***/
 	
@@ -171,43 +186,34 @@ function CanvasState(canvas) {
 	
 	// mouse interaction
 	canvas.addEventListener('mousedown', function(e) {
-		var mouse = myState.getMouse(e);
-		var shapes = myState.shapes;
-		var l = shapes.length;
-		var tileSize = this.height / 50;
-		var gridx = Math.floor(mouse.x / tileSize)*tileSize;
-		var gridy = Math.floor(mouse.y / tileSize)*tileSize;
-		myState.dragging = true;
-		
-		switch(selectedTool) {
-			case 0: // draw wall rectangle
-				myState.dragX = mx;
-				myState.dragY = my;
-				// draw temporary box
-				break;
-			case 1: // eraser
-				for (var i = l-1; i >= 0; i--) {
-					if (shapes[i].contains(gridx, gridy)) {
-						shapes.splice(i, 1);
-						myState.valid = false;
+		if (e.button == 0) {
+			var mouse = myState.getMouse(e);
+			var shapes = myState.shapes;
+			var l = shapes.length;
+			var tileSize = this.height / 50;
+			var mx = mouse.x;
+			var my = mouse.y;
+			var gridx = Math.floor(mx / tileSize)*tileSize;
+			var gridy = Math.floor(my / tileSize)*tileSize;
+			myState.dragging = true;
+			
+			switch(selectedTool) {
+				case 1: // eraser
+					for (var i = l-1; i >= 0; i--) {
+						if (shapes[i].contains(mx, my)) {
+							shapes.splice(i, 1);
+							myState.valid = false;
+						}
 					}
-				}
-			case 2: // draw monsters
-				
-				break;
-			case 3: // draw bosses
-				
-				break;
-			case 4: // draw items 
-				
-				break;
-			default: // draw walls - selectedTool should be -1
-				for (var i = l-1; i >= 0; i--) {
-					if (shapes[i].contains(gridx, gridy)) {
-						shapes.pop(shapes[i]);
+					break;
+				default: // draw walls - selectedTool should be -1
+					for (var i = l-1; i >= 0; i--) {
+						if (shapes[i].contains(mx, my)) {
+							shapes.splice(i, 1);
+						}
 					}
-				}
-				myState.addShape(new Shape(gridx, gridy, tileSize, tileSize, 'rgb(0,0,0)'));
+					myState.addShape(new Shape(gridx, gridy, tileSize, tileSize, 'rgb(0,0,0)'));
+			}
 		}
 	}, true);
 	
@@ -220,9 +226,6 @@ function CanvasState(canvas) {
 		var gridy = Math.floor(mouse.y / tileSize)*tileSize;
 		if(myState.dragging) {
 			switch(selectedTool) {
-				case 0: // draw wall rectangle
-					// Draw temporary box, remove old temporary box
-					break;
 				case 1: // eraser
 					for (var i = l-1; i >= 0; i--) {
 						if (shapes[i].contains(gridx, gridy)) {
@@ -230,14 +233,6 @@ function CanvasState(canvas) {
 							myState.valid = false;
 						}
 					}
-				case 2: // draw monsters
-					
-					break;
-				case 3: // draw bosses
-					
-					break;
-				case 4: // draw items 
-					
 					break;
 				default: // draw walls - selectedTool should be -1
 					myState.addShape(new Shape(gridx, gridy, tileSize, tileSize, 'rgb(0,0,0)'));
@@ -246,20 +241,85 @@ function CanvasState(canvas) {
 	}, true);
 	
 	canvas.addEventListener('mouseup', function(e) {
-		myState.dragging = false;
+		if(e.button == 1) {
+			myState.dragging = false;
+		}
 	}, true);
 	
 	// canvas state buttons
 	buttonClear.addEventListener('click', function(e) {
-		var shapes = this.shapes;
+		var shapes = myState.shapes;
 		var l = shapes.length;
 		for (var i = l-1; i >= 0; i--) {
 			shapes.pop();
 		}
 	});
+	
+		/*** modalAcceptClick ***/
 	buttonSave.addEventListener('click', function(e) {
-		var dataURL = canvas.toDataURL('image/png');
-		// !!post here!!
+		var caption = captionInput.value.trim();
+		var mapData = [];
+		
+		var shapes = myState.shapes;
+		var l = shapes.length;
+		var canvasSize = canvas.height;
+		var tileSize = canvasSize / 50;
+		if (caption) {
+			var mapHasData = 0;
+			
+			// Initialize
+			for (var i = 0; i < 50; i++) {
+				for (var j = 0; j < 50; j++) {
+					mapData[i*50 + j] = "0";
+				}
+			}
+			// Copy Map
+			console.log('mapData', mapData);
+			for (var i = 0; i < 50; i++) {
+				for (var j = 0; j < 50; j++) {
+					for (var k = l-1; k >= 0; k--) {
+						if (shapes[k].contains((j*tileSize + 1), (i*tileSize + 1))) {
+							mapData[i*50 + j] = "1";
+							mapHasData = 1;
+						}
+					}
+				}
+			}
+			if (!mapHasData) {
+				alert("Please draw a map");
+			} else { // Submit Map
+				var request = new XMLHttpRequest();
+				var environment = getEnvironmentFromURL();
+				var url = "/environments/" + environment + "/addMap";
+				request.open("POST", url);
+				
+				var requestBody = JSON.stringify({
+					caption: caption,
+					mapData: mapData
+				});
+				
+				request.addEventListener('load', function (event) {
+					if (event.target.status === 200) {
+						var mapTemplate = Handlebars.temapltes.map;
+						var newMapHTML = mapTemplate({
+							caption: caption,
+							mapData: mapData
+						});
+						var mapContainer = document.querySelector('.map-container');
+						mapContainer.insertAdjacentHTML('beforeend', newMapHTML);
+					} else {
+						alert("Error storing map: " + event.target.response);
+					}
+				});
+				
+				request.setRequestHeader('Content-Type', 'application/json');
+				request.send(requestBody);
+				
+				closeModal();
+			}
+		} else {
+			alert("Please input a caption");
+		}
 	});
 	
 	// Canvas refresh interval
@@ -272,17 +332,12 @@ CanvasState.prototype.addShape = function(shape) {
 	this.valid = false;
 }
 
-CanvasState.prototype.clear = function() {
-	this.ctx.clearRect(0,0, this.width, this.height);
-}
-
 CanvasState.prototype.draw = function() {
 	// if state is invalid, redraw and validate
 	if(!this.valid) {
 		var ctx = this.ctx;
 		var shapes = this.shapes;
 		var l = shapes.length;
-		this.clear();
 		
 		// draw all shapes
 		for(var i = 0; i < l; i++) {
@@ -321,7 +376,61 @@ CanvasState.prototype.getMouse = function(e) {
 	return{x: mx, y: my};
 }
 
-CanvasState.prototype.clear = function(e) {
+/******************
+ * Display Canvas *
+ ******************/
+function displayCanvasState(canvas, displayValues) {
+	
+	this.canvas = canvas;
+	
+	this.width = canvas.width;
+	this.height = canvas.height;
+	this.ctx = canvas.getContext('2d');
+	
+	this.shapes = []; // the collection of things to be drawn
+	
+	var ctx = this.ctx
+	var shapes = this.shapes;
+	
+	//Fix draw coordinates with border or padding
+	var stylePaddingLeft, stylePaddingTop, styleBorderLeft, styleBorderTop;
+	if (document.defaultView && document.defaultView.getComputedStyle) {
+		this.stylePaddingLeft	= parseInt(document.defaultView.getComputedStyle(canvas, null)['paddingLeft'], 10)		|| 0;
+		this.stylePaddingTop	= parseInt(document.defaultView.getComputedStyle(canvas, null)['paddingTop'], 10)		|| 0;
+		this.styleBorderLeft	= parseInt(document.defaultView.getComputedStyle(canvas, null)['borderLeftWidth'], 10)	|| 0;
+		this.styleBorderTop		= parseInt(document.defaultView.getComputedStyle(canvas, null)['borderTopWidth'], 10)	|| 0;
+	}
+	
+	// Draw the image
+	for(var i = 0; i < 50; i++) {
+		for(var j = 0; j < 50; j++) {
+			if(displayValues[i*50 + j]) {
+				this.addShape(new Shape((tileSize*j), (tileSize*i), tileSize, tileSize, 'rgb(0,0,0)'));
+			}
+		}
+	}
+	
+	// Refresh the Canvas
+	var l = shapes.length;
+	
+
+	for(var i = 0; i < l; i++) {
+		var shape = shapes[i];
+		// if the shape is not on the canvas, we need not draw it
+		if (shape.x > this.width || shape.y > this.height ||
+			shape.x + shape.w < 0 || shape.y + shape.h < 0)
+				continue;
+		shapes[i].draw(ctx);
+	}
+}
+
+
+displayCanvasState.prototype.addShape = function(shape) {
+	this.shapes.push(shape);
+	this.valid = false;
+}
+
+function initDisplayCanvasState() {
 	
 }
 
@@ -329,6 +438,15 @@ CanvasState.prototype.clear = function(e) {
  *   Initialization   *
  **********************/
  
- var s = new CanvasState(mapCanvas);
+ if (mapCanvas != undefined) {
+	var s = new CanvasState(mapCanvas);
+	var l = container.childElementCount;
+	for(var i = 0; i < l; i++) {
+		var canv = container.
+		var data = container.lastChild
+		container.lastChild.pop();
+		var t = new displayCanvasState()
+	}
+ }
  eventListenerInit();
  colorChange(selectedTool);

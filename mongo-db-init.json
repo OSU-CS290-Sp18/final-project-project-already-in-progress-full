@@ -1,0 +1,21 @@
+[
+  {
+    "environment": "forest",
+    "maps": [
+	  {
+	    "caption": "",
+		"mapCode": ""
+	  }
+	]
+  },
+  
+  {
+    "environment": "mountains",
+    "maps": []
+  },
+  
+  {
+    "environment": "underdark",
+    "maps": []
+  }
+]

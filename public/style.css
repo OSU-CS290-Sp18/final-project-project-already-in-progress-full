@@ -13,7 +13,7 @@ a {
 	padding: 10px 20px;
 	font-size: 30px;
 	font-weight: 100;
-	background-color: #DC143C;
+	background: linear-gradient(to bottom left, #DC143C, #222222);
 	color: #fff;
 }
 
