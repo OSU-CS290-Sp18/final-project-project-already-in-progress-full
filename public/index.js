@@ -207,6 +207,7 @@ function CanvasState(canvas) {
 							myState.valid = false;
 						}
 					}
+					
 					break;
 				default: // draw walls - selectedTool should be -1
 					for (var i = l-1; i >= 0; i--) {
