@@ -31,11 +31,56 @@ var conent = document.createElement('article');
       alert('you did not add a map name or create a map!');
       
   }else{
-    **
-    **
-    **
-    **
-    **
-    **
+    
+    conent.setAttribute('class','map');
+
+       document.getElementById("container-div").append(conent);
+
+       var innerelem = document.createElement('div');
+
+       innerelem.setAttribute('class','icon');
+
+       conent.append(innerelem);
+
+       conent = innerelem;
+    
+    var innerelem = document.createElement('div');
+
+       var content_elem = innerelem;
+
+       innerelem.setAttribute('class',content');
+
+       articeElem.append(innerelem);
+
+       conent = innerelem;
+
+       var innerelem = document.createElement('p');
+
+       innerelem.setAttribute('class','map');
+
+       innerelem.textContent = map;
+
+       conent.append(innerelem);
+
+       conent = innerelem;
+
+       var innerelem = document.createElement('p');
+
+       innerelem.setAttribute('class','attribution');
+
+       content_elem.append(innerelem);
+
+       conent = innerelem;
+
+       var innerelem = document.createElement('a');
+
+       innerelem.setAttribute('href','#');
+
+       innerelem.textContent = author;
+
+       conent.append(innerelem);
+
+       conent = innerelem;
+
   CloseModal();
 }
