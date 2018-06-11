@@ -25,24 +25,24 @@ function createMaping(){
   
   var author = document.getElementById("attribution-input").value;
 
-var conent = document.createElement('article');
+var content = document.createElement('article');
 
   if(map=='' || name==''){
       alert('you did not add a map name or create a map!');
       
   }else{
     
-    conent.setAttribute('class','map');
+    content.setAttribute('class','map');
 
-       document.getElementById("container-div").append(conent);
+       document.getElementById("container-div").append(content);
 
        var innerelem = document.createElement('div');
 
        innerelem.setAttribute('class','icon');
 
-       conent.append(innerelem);
+       content.append(innerelem);
 
-       conent = innerelem;
+       content = innerelem;
     
     var innerelem = document.createElement('div');
 
@@ -52,7 +52,7 @@ var conent = document.createElement('article');
 
        articeElem.append(innerelem);
 
-       conent = innerelem;
+       content = innerelem;
 
        var innerelem = document.createElement('p');
 
@@ -60,9 +60,9 @@ var conent = document.createElement('article');
 
        innerelem.textContent = map;
 
-       conent.append(innerelem);
+       content.append(innerelem);
 
-       conent = innerelem;
+       content = innerelem;
 
        var innerelem = document.createElement('p');
 
@@ -70,7 +70,7 @@ var conent = document.createElement('article');
 
        content_elem.append(innerelem);
 
-       conent = innerelem;
+       content = innerelem;
 
        var innerelem = document.createElement('a');
 
@@ -78,9 +78,9 @@ var conent = document.createElement('article');
 
        innerelem.textContent = author;
 
-       conent.append(innerelem);
+       content.append(innerelem);
 
-       conent = innerelem;
+       content = innerelem;
 
   CloseModal();
 }
