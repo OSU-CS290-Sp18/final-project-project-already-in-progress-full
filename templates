@@ -30,7 +30,51 @@
 
 
 
-//templ
+//template for index.js
 
+
+x{{> header}}
+
+<div class="title-container">
+
+<h2> You are posting on {{name}}</h2>
+
+</div>
+
+<main class="container">
+
+{{# each twit}}
+
+{{> twit}}
+
+{{/each}}
+
+</main>
+
+{{#if showModal}}
+
+{{> createModal}}
+
+{{/if}}
+
+
+
+//temlpate for dungeon maps
+
+<article class="maps">
+
+</div>
+
+<div class="content">
+
+<p class="attribution">
+
+<a href="/maps/{{@key}}">{{name}}</a>
+
+</p>
+
+</div>
+
+</article>
 
 
