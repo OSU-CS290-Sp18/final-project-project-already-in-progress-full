@@ -38,8 +38,6 @@ var content = document.createElement('article');
 
        var innerelem = document.createElement('div');
 
-       innerelem.setAttribute('class','icon');
-
        content.append(innerelem);
 
        content = innerelem;
