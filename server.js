@@ -1,7 +1,7 @@
 var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars');
-var bodyParser = require('body-parser');
+//var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
 var mongoHost = process.env.MONGO_HOST || "classmongo.engr.oregonstate.edu";
@@ -71,7 +71,7 @@ app.post('/environtments/:environtment/addMap', function (req,res,next) {
 	if (req.body && req.body.caption && req.body.canvas) {
 		var map = {
 			caption: req.body.caption,
-			mapData: req.body.mapData // CHECK THIS CODE
+			mapData: req.body.mapData
 		};
 		var mapsCollection = mongoDB.collection('maps');
 		mapsCollection.updateOne(

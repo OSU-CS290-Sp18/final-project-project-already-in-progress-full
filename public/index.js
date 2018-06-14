@@ -10,7 +10,7 @@ const inactive	= {color: 'rgb(0,0,0)', backgroundColor: 'rgb(200,200,200)'};
 var buttonWallSingle	= document.getElementById('button-canvas-wall-single');
 var buttonEraser		= document.getElementById('button-canvas-eraser');
 var buttonClear			= document.getElementById('button-canvas-clear');
-var buttonSave			= document.getElementById('button-canvas-save');
+var buttonSave			= document.getElementById('modal-accept-button');
 var mapCanvas			= document.getElementById('map-canvas');
 var selectedTool 		= -1;
 
@@ -20,6 +20,8 @@ var modalBackdrop		= document.getElementById('modal-backdrop');
 var createModal			= document.getElementById('create-modal');
 var captionInput		= document.getElementById("text-input");
 var createButton		= document.getElementById("createButton");
+var closeButton			= document.getElementById("modal-close-button");
+var cancelButton		= document.getElementById("modal-cancel-button");
 
 var cardContainer		= document.getElementsByClassName("container")[0];
 
@@ -76,6 +78,7 @@ function eventListenerInit() {
 // Modal event listeners
 if(createButton != undefined) {
 	createButton.addEventListener('click', unhideModal())
+	
 }
 
 
@@ -250,13 +253,15 @@ function CanvasState(canvas) {
 	}, true);
 	
 	// canvas state buttons
-	buttonClear.addEventListener('click', function(e) {
+	function clearCanvas (event) {
 		var shapes = myState.shapes;
 		var l = shapes.length;
 		for (var i = l-1; i >= 0; i--) {
 			shapes.pop();
 		}
-	});
+		myState.valid = false;
+	}
+	buttonClear.addEventListener('click', clearCanvas);
 	
 		/*** modalAcceptClick ***/
 	buttonSave.addEventListener('click', function(e) {
@@ -324,6 +329,15 @@ function CanvasState(canvas) {
 			alert("Please input a caption");
 		}
 	});
+	//Clear Modal
+	function clearModal (event) {
+		captionInput = '';
+		clearCanvas();
+		hideModal();
+	}
+	closeButton.addEventListener('click', clearModal);
+	cancelButton.addEventListener('click', clearModal);
+	
 	
 	// Canvas refresh interval
 	this.interval = 30;
